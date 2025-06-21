@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Buscador de Ropa por Colorimetría</title>
+  <style>
+    body { font-family: Arial, sans-serif; background-color: #fff8f0; padding: 2rem; color: #333; }
+    h1 { color: #c96; }
+    .selector, .resultados { margin-top: 2rem; }
+    select, button { padding: 0.5rem; margin-right: 1rem; }
+    .item { background: #fff; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>Buscador de Ropa por Colorimetría</h1>
+
+  <div class="selector">
+    <label for="paleta">Selecciona tu paleta:</label>
+    <select id="paleta">
+      <option value="primavera_calida">Primavera Cálida</option>
+      <option value="otono_calido">Otoño Cálido</option>
+      <option value="otono_real">Otoño Real</option>
+    </select>
+    <button onclick="buscarRopa()">Buscar</button>
+  </div>
+
+  <div class="resultados" id="resultados"></div>
+
+  <script>
+    const ropaPorPaleta = {
+      primavera_calida: [
+        { nombre: "Top de lino coral", url: "#", color: "#f88379" },
+        { nombre: "Blusa mostaza claro", url: "#", color: "#f3c86d" },
+        { nombre: "Camiseta melón", url: "#", color: "#f8a67c" },
+        { nombre: "Vestido verde menta cálido", url: "#", color: "#b5d6a3" }
+      ],
+      otono_calido: [
+        { nombre: "Camiseta mostaza oscuro", url: "#", color: "#d4a017" },
+        { nombre: "Blusa calabaza", url: "#", color: "#ff7518" },
+        { nombre: "Top marrón caramelo", url: "#", color: "#a0522d" }
+      ],
+      otono_real: [
+        { nombre: "Camiseta verde bosque", url: "#", color: "#228b22" },
+        { nombre: "Top terracota profundo", url: "#", color: "#cc4e36" },
+        { nombre: "Blusa cobre", url: "#", color: "#b87333" }
+      ]
+    };
+
+    function buscarRopa() {
+      const seleccion = document.getElementById("paleta").value;
+      const resultados = document.getElementById("resultados");
+      resultados.innerHTML = "";
+      ropaPorPaleta[seleccion].forEach(item => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = `<strong>${item.nombre}</strong><br><a href='${item.url}'>Ver producto</a><br><div style='width: 50px; height: 20px; background-color: ${item.color}; margin-top: 5px;'></div>`;
+        resultados.appendChild(div);
+      });
+    }
+
+    window.onload = buscarRopa;
+  </script>
+</body>
+</html>
