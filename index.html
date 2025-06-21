@@ -1,15 +1,43 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Buscador de Ropa por Colorimetría</title>
   <style>
-    body { font-family: Arial, sans-serif; background-color: #fff8f0; padding: 2rem; color: #333; }
-    h1 { color: #c96; }
-    .selector, .resultados { margin-top: 2rem; }
-    select, button { padding: 0.5rem; margin-right: 1rem; }
-    .item { background: #fff; padding: 1rem; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 1rem; }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8f0;
+      padding: 2rem;
+      color: #333;
+    }
+    h1 {
+      color: #c96;
+    }
+    .selector,
+    .resultados {
+      margin-top: 2rem;
+    }
+    select,
+    button {
+      padding: 0.5rem;
+      margin-right: 1rem;
+    }
+    .item {
+      background: #fff;
+      padding: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .item img {
+      width: 100px;
+      height: auto;
+      border-radius: 6px;
+    }
   </style>
 </head>
 <body>
@@ -30,31 +58,81 @@
   <script>
     const ropaPorPaleta = {
       primavera_calida: [
-        { nombre: "Top de lino coral", url: "#", color: "#f88379" },
-        { nombre: "Blusa mostaza claro", url: "#", color: "#f3c86d" },
-        { nombre: "Camiseta melón", url: "#", color: "#f8a67c" },
-        { nombre: "Vestido verde menta cálido", url: "#", color: "#b5d6a3" }
+        {
+          nombre: "Camiseta de tirantes coral – Zara",
+          url: "https://www.zara.com/es/es/camiseta-tirantes-fluida-p04372211.html",
+          imagen:
+            "https://static.zara.net/photos///2023/V/0/1/p/4372/211/620/2/w/750/4372211620_2_1_1.jpg?ts=1679568040871",
+          color: "#f88379",
+        },
+        {
+          nombre: "Top ‘Lost in Sun’ melocotón – The-Are (El Corte Inglés)",
+          url: "https://www.elcorteingles.es/moda/A48334270-top-de-mujer-the-are-lost-in-sun-con-tirantes-en-color-melocoton/",
+          imagen:
+            "https://asset1.elcorteingles.es/medias/sys_master/front/images/h31/h5d/7510425957174.jpg",
+          color: "#f8a67c",
+        },
+        {
+          nombre: "Tank Top coral – Amazon",
+          url: "https://www.amazon.es/dp/B09VKR7W3L",
+          imagen:
+            "https://m.media-amazon.com/images/I/61O8ebAf+2L._AC_UX679_.jpg",
+          color: "#f07057",
+        },
       ],
       otono_calido: [
-        { nombre: "Camiseta mostaza oscuro", url: "#", color: "#d4a017" },
-        { nombre: "Blusa calabaza", url: "#", color: "#ff7518" },
-        { nombre: "Top marrón caramelo", url: "#", color: "#a0522d" }
+        {
+          nombre: "Blusa calabaza – Zalando",
+          url: "https://www.zalando.es/only-onllive-love-life-blusa-rust-brown-on321e1kz-o11.html",
+          imagen:
+            "https://img01.ztat.net/article/spp-media-p1/1f79b2383a80493e9a1fbeef29a8d6e2/58235a8beefc4c7791df6815a7278c16.jpg",
+          color: "#ff7518",
+        },
+        {
+          nombre: "Top marrón caramelo – Mango",
+          url: "https://shop.mango.com/es/mujer/tops-top/tirantes-caramelo_57035748.html",
+          imagen:
+            "https://st.mngbcn.com/rcs/pics/static/T6/fotos/S20/67035748_30.jpg",
+          color: "#a0522d",
+        },
       ],
       otono_real: [
-        { nombre: "Camiseta verde bosque", url: "#", color: "#228b22" },
-        { nombre: "Top terracota profundo", url: "#", color: "#cc4e36" },
-        { nombre: "Blusa cobre", url: "#", color: "#b87333" }
-      ]
+        {
+          nombre: "Camiseta verde bosque – C&A",
+          url: "https://www.c-and-a.com/es/es/shop/tanktop-basico-verde-bosque",
+          imagen:
+            "https://images.c-and-a.com/Assets/ES/On_Site/Category/category_1210/Women_Tops.jpg",
+          color: "#228b22",
+        },
+        {
+          nombre: "Top terracota profundo – Sfera",
+          url: "https://sfera.eldorado.es/top-mujer-tirantes-terracota",
+          imagen:
+            "https://sfera-static.eldorado.es/media/catalog/product/cache/1/image/800x/040ec09b1e35df139433887a97daa66f/top-terracota.jpeg",
+          color: "#cc4e36",
+        },
+      ],
     };
 
     function buscarRopa() {
       const seleccion = document.getElementById("paleta").value;
       const resultados = document.getElementById("resultados");
       resultados.innerHTML = "";
-      ropaPorPaleta[seleccion].forEach(item => {
+      ropaPorPaleta[seleccion].forEach((item) => {
         const div = document.createElement("div");
         div.className = "item";
-        div.innerHTML = `<strong>${item.nombre}</strong><br><a href='${item.url}'>Ver producto</a><br><div style='width: 50px; height: 20px; background-color: ${item.color}; margin-top: 5px;'></div>`;
+        div.innerHTML = `
+          <img src="${item.imagen}" alt="${item.nombre}" />
+          <div>
+            <strong>${item.nombre}</strong><br />
+            <a href='${item.url}' target="_blank" rel="noopener noreferrer"
+              >Ver producto</a
+            ><br />
+            <div
+              style="width: 50px; height: 20px; background-color: ${item.color}; margin-top: 5px;"
+            ></div>
+          </div>
+        `;
         resultados.appendChild(div);
       });
     }
